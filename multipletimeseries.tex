@@ -21,7 +21,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 
-\title{Representation for Related Time Series with Different Schemas}
+\title{Learning Representations for Mutiple Time Series via Supervised and Unsupervised Learning}
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -74,15 +74,7 @@
 \end{abstract}
 
 \section{Introduction}
-
-NIPS requires electronic submissions.  The electronic submission site
-is
-\begin{center}
-  \url{https://cmt.research.microsoft.com/NIPS2017/}
-\end{center}
-
-Please read carefully the instructions below and follow them
-faithfully.
+Often, supervised learning on time series is performed on a single schema. When multiple time series, each with their own schema, are needed to inform the same supervised task, the representation of this data is usually constructed via an arbitrary choice in representation.  Consider multiple time series stored in relational database so that different tables contain different time series and each row contains a single event in time. We wish to produce a single schema for one table that contains events from all tablse, so that we can learn supervised tasks driven by this data. There are some obvious options for making a single schema that captures multiple time series. One option is creating a single schema through joining where the rows represent event combinations. Another option is using the same schema as a join, where the rows by inserting rows from each schema. The first option is unfeasible with entities that originate in large datasets, for example, datasets having more than a billion rows. The second option is feasible and will yield less sparsity than the first option. In this paper, we would like to explore two new methods for representing multiple time series per entity. One represetion is learned via an auto-encoder and another representation learned as part of a supervised learning task. We wish to compare the performance of each representation on a supervised learning task.
 
 \subsection{Style}
 
