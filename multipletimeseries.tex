@@ -21,7 +21,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 
-\title{Learning Representations for Mutiple Time Series via Supervised and Unsupervised Learning}
+\title{Unsupervised Masking}
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -74,7 +74,28 @@
 \end{abstract}
 
 \section{Introduction}
-Often, supervised learning on time series is performed on a single schema. When multiple time series, each with their own schema, are needed to inform the same supervised task, the representation of this data is usually constructed via an arbitrary choice in representation.  Consider multiple time series stored in relational database so that different tables contain different time series and each row contains a single event in time. We wish to produce a single schema for one table that contains events from all tablse, so that we can learn supervised tasks driven by this data. There are some obvious options for making a single schema that captures multiple time series. One option is creating a single schema through joining where the rows represent event combinations. Another option is using the same schema as a join, where the rows by inserting rows from each schema. The first option is unfeasible with entities that originate in large datasets, for example, datasets having more than a billion rows. The second option is feasible and will yield less sparsity than the first option. In this paper, we would like to explore two new methods for representing multiple time series per entity. One represetion is learned via an auto-encoder and another representation learned as part of a supervised learning task. We wish to compare the performance of each representation on a supervised learning task.
+Often, supervised learning on time series is performed on a single schema. When multiple time series, each with their own schema, are needed to inform the same supervised task, the representation of this data is usually constructed via an arbitrary choice in representation.  Consider multiple time series stored in relational database so that different tables contain different time series and each row contains a single event in time. We wish to produce a single schema for one table that contains events from all tables, so that we can learn supervised tasks driven by this data. There are some obvious options for making a single schema that captures multiple time series. One option is creating a single schema through joining where the rows represent event combinations. Another option is using the same schema as a join, where the rows by inserting rows from each schema. The first option is unfeasible with entities that originate in large datasets, for example, datasets having more than a billion rows. The second option is feasible and will yield less sparsity than the first option. However, it will require the user to invent a massive missing value imputation strategy. In this paper, we would like to explore two alernative methods for representing multiple time series per entity. One represeNtion is learned via an auto-encoder and another representation learned as part of a supervised learning task. We wish to compare the performance of each representation on a supervised learning task.
+
+\section{Background}
+Recently, REFERENCE used a supervised method for learning a joint represention of sensory data, measurements, and goals as part of their reinfocrement learning algorithm. Also recently, time series masking yielding consistently improved results over benchmarks in time series predictions and classification schemes REFERENCE, based upon a study where context learning was performed via masking prior to sequence learning in a translation task REFERENCE.
+
+\section{Model}
+INSERT MODEL INTRODUCTION HERE
+
+\subsection{Rolling Time Window Health Classification}
+INSERT INFORMATION HERE
+
+\subsection{Supervised Representation}
+A supervised representation is learned over an input time series X with one-hot encoded labels Y for D different datasets. The input time series is masked based upon the time between events in each time series where the masking is learned via a feed-forward neural network.  Each input time series is represented as a hidden vector hvector. The combined representation layer is formed by simply concatenating the hidden vectors together. Subsequent feed-forward layers are then used to learn combinatorial feature across the once seperated hidden hvectors. Lastly, softmax is used to fin the probability of the set time series yielding each class in Y. 
+
+\subsection{Unsupervised Representation}
+An unsuperverised representation is learned over the input time series X for D different datasets omitting any inclusion of Y. The input layers are identical to the supervised case shown above until a single-vector representation layer is reached. The decoder following this layer attempts to reconstruct the orignal time series is attempted be decoded. This representation contains an  disadvantage over the supevised representaiton in relation to containing important features for the task.
+
+\subsection{Unsupervised Masking}
+The final model in produced by taking the supervised representation and masking it using the unsupervised representation. The intuition here is to seperate signal from noise by masking the natural structure of the data out of the supervised represenation. This means that the mask will filter out structures in the data that are not important for the supervised task, while permitting signals that remain relevant.
+
+
+
 
 \subsection{Style}
 
